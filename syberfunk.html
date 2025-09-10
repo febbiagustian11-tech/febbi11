@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shoya - Linktree Cyberfunk</title>
+  <style>
+    /* Import futuristic font */
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+    /* Reset & body */
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #0d001f;
+      background-image:
+        radial-gradient(circle at 20% 20%, #ff00c8 15%, transparent 40%),
+        radial-gradient(circle at 80% 80%, #00fff7 15%, transparent 40%);
+      font-family: 'Orbitron', sans-serif;
+      color: #fff;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Animated glitch background lines */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        repeating-linear-gradient(0deg, rgba(255,0,200,0.1), rgba(255,0,200,0.1) 2px, transparent 2px, transparent 4px),
+        repeating-linear-gradient(90deg, rgba(0,255,255,0.1), rgba(0,255,255,0.1) 2px, transparent 2px, transparent 4px);
+      pointer-events: none;
+      animation: glitchLines 8s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes glitchLines {
+      0% { background-position: 0 0, 0 0; }
+      50% { background-position: 100px 100px, 100px 100px; }
+      100% { background-position: 0 0, 0 0; }
+    }
+
+    /* Container */
+    .container {
+      position: relative;
+      background: rgba(10, 0, 30, 0.85);
+      border: 2px solid #ff00c8;
+      border-radius: 20px;
+      padding: 40px 35px;
+      width: 360px;
+      text-align: center;
+      box-shadow:
+        0 0 15px 3px #ff00c8,
+        0 0 30px 6px #00fff7;
+      backdrop-filter: blur(12px);
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s ease;
+      overflow: hidden;
+    }
+    .container.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Glitch text effect */
+    h2 {
+      font-size: 28px;
+      color: #ff00c8;
+      position: relative;
+      letter-spacing: 2px;
+      margin: 0 0 10px;
+      text-transform: uppercase;
+      user-select: none;
+    }
+    h2::before,
+    h2::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      clip: rect(0, 900px, 0, 0);
+    }
+    h2::before {
+      animation: glitchTop 2s infinite linear alternate-reverse;
+      color: #00fff7;
+      z-index: -1;
+    }
+    h2::after {
+      animation: glitchBottom 2s infinite linear alternate;
+      color: #ff00c8;
+      z-index: -2;
+    }
+    @keyframes glitchTop {
+      0% {
+        clip: rect(0, 900px, 0, 0);
+        transform: translate(-2px, -2px);
+      }
+      20% {
+        clip: rect(0, 900px, 40px, 0);
+        transform: translate(2px, 2px);
+      }
+      40% {
+        clip: rect(10px, 900px, 50px, 0);
+        transform: translate(-2px, 0);
+      }
+      60% {
+        clip: rect(0, 900px, 40px, 0);
+        transform: translate(2px, -2px);
+      }
+      80% {
+        clip: rect(10px, 900px, 50px, 0);
+        transform: translate(-2px, 2px);
+      }
+      100% {
+        clip: rect(0, 900px, 0, 0);
+        transform: translate(0);
+      }
+    }
+    @keyframes glitchBottom {
+      0% {
+        clip: rect(0, 900px, 0, 0);
+        transform: translate(2px, 2px);
+      }
+      20% {
+        clip: rect(20px, 900px, 60px, 0);
+        transform: translate(-2px, -2px);
+      }
+      40% {
+        clip: rect(10px, 900px, 50px, 0);
+        transform: translate(2px, 0);
+      }
+      60% {
+        clip: rect(20px, 900px, 60px, 0);
+        transform: translate(-2px, 2px);
+      }
+      80% {
+        clip: rect(10px, 900px, 50px, 0);
+        transform: translate(2px, -2px);
+      }
+      100% {
+        clip: rect(0, 900px, 0, 0);
+        transform: translate(0);
+      }
+    }
+
+    /* Subtitle */
+    p {
+      font-size: 14px;
+      color: #a0a0ff;
+      margin: 0 0 30px;
+      letter-spacing: 1px;
+      user-select: none;
+      text-shadow: 0 0 6px #00fff7;
+    }
+
+    /* Profile image with neon border and glow */
+    .profile-img {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      border: 3px solid #ff00c8;
+      box-shadow:
+        0 0 10px #ff00c8,
+        0 0 20px #ff00c8,
+        0 0 30px #00fff7;
+      object-fit: cover;
+      margin-bottom: 25px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+    .profile-img:hover {
+      transform: scale(1.1) rotate(5deg);
+      box-shadow:
+        0 0 20px #ff00c8,
+        0 0 40px #00fff7,
+        0 0 60px #ff00c8;
+    }
+
+    /* Buttons neon style */
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: transparent;
+      border: 2px solid #00fff7;
+      color: #00fff7;
+      text-decoration: none;
+      padding: 14px 0;
+      margin: 10px 0;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      box-shadow:
+        0 0 8px #00fff7,
+        inset 0 0 10px #00fff7;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn i {
+      font-size: 20px;
+      transition: transform 0.3s ease;
+    }
+    .btn:hover {
+      background: #00fff7;
+      color: #0d001f;
+      box-shadow:
+        0 0 20px #00fff7,
+        inset 0 0 20px #00fff7;
+    }
+    .btn:hover i {
+      transform: rotate(20deg) scale(1.2);
+    }
+
+    /* Glitch effect on buttons on hover */
+    .btn::before,
+    .btn::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -2px; right: -2px; bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(0,255,255,0.3), transparent);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      mix-blend-mode: screen;
+      border-radius: 14px;
+    }
+    .btn::after {
+      left: auto;
+      right: -2px;
+      background: linear-gradient(270deg, transparent, rgba(255,0,200,0.3), transparent);
+    }
+    .btn:hover::before,
+    .btn:hover::after {
+      opacity: 1;
+      animation: glitchMove 1s infinite linear;
+    }
+    @keyframes glitchMove {
+      0% { transform: translateX(0); }
+      50% { transform: translateX(5px); }
+      100% { transform: translateX(0); }
+    }
+  </style>
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/6e0579b60d.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="container" id="card">
+    <img src="img/Ishida.jfif" alt="profile" class="profile-img" />
+    <h2 data-text="Shoya">Shoya</h2>
+    <p>Hai, Saya Shoya - Web Developer</p>
+
+    <a href="https://portofoliofebbi.netlify.app/" class="btn"><i class="fas fa-globe"></i>Portfolio</a>
+    <a href="https://wa.me/6285174187808" class="btn"><i class="fab fa-whatsapp"></i>WhatsApp</a>
+    <a href="https://www.tiktok.com/@ebyy078?_t=ZS-8zbhzJYXK59&_r=1" class="btn"><i class="fab fa-tiktok"></i>TikTok</a>
+    <a href="https://www.instagram.com/febbiiiiii788?igsh=eWVsejlmdGFqYXUw" class="btn"><i class="fab fa-instagram"></i>Instagram</a>
+    <a href="https://whatsapp.com/channel/0029VbAzgvtDeON7Yr9JQH2y" class="btn"><i class="fas fa-whatsapp-grup"></i>Grup Belajar Bareng</a>
+  </div>
+
+  <script>
+    window.addEventListener("load", () => {
+      document.getElementById("card").classList.add("show");
+    });
+  </script>
+</body>
+</html>
